@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firewall Web Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body style="font-family: Arial; padding:20px">
+
+<h2>🔥 Firewall Web Dashboard</h2>
+
+<canvas id="trafficChart" width="700" height="350"></canvas>
+
+<script src="/static/chart.js"></script>
+
+<hr>
+
+<h3>Manual Firewall Control</h3>
+<input id="ip" placeholder="Enter IP address">
+<button onclick="blockIP()">Block IP</button>
+<button onclick="allowIP()">Allow IP</button>
+
+<script>
+function blockIP(){
+    fetch("/api/block", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({ip:document.getElementById("ip").value})
+    }).then(r=>r.json()).then(d=>alert(JSON.stringify(d)))
+}
+function allowIP(){
+    fetch("/api/allow", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({ip:document.getElementById("ip").value})
+    }).then(r=>r.json()).then(d=>alert(JSON.stringify(d)))
+}
+</script>
+
+</body>
+</html>
